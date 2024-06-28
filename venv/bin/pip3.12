@@ -1,4 +1,4 @@
-#!/Users/eugenenope/PycharmProjects/airport_service/Airport/venv/bin/python3.12
+#!/Users/eugenenope/PycharmProjects/airport_service/airport_service/venv/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys
