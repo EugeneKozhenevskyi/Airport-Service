@@ -49,7 +49,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'Airport.urls'
+ROOT_URLCONF = 'airport_service.urls'
 
 TEMPLATES = [
     {
