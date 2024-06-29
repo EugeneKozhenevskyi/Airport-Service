@@ -6,9 +6,9 @@ class Airplane(models.Model):
     name = models.CharField(max_length=100)
     rows = models.IntegerField()
     seats_in_row = models.IntegerField()
-    airplane_type = models.ForeignKey("AirplaneType",
-                                      on_delete=models.CASCADE,
-                                      related_name="airplanes")
+    airplane_type = models.ForeignKey(
+        "AirplaneType", on_delete=models.CASCADE, related_name="airplanes"
+    )
 
     @property
     def capacity(self) -> int:
@@ -55,8 +55,12 @@ class Airport(models.Model):
 
 
 class Route(models.Model):
-    source = models.ForeignKey(Airport, on_delete=models.CASCADE, related_name="sources_route")
-    destination = models.ForeignKey(Airport, on_delete=models.CASCADE, related_name="destinations_route")
+    source = models.ForeignKey(
+        Airport, on_delete=models.CASCADE, related_name="sources_route"
+    )
+    destination = models.ForeignKey(
+        Airport, on_delete=models.CASCADE, related_name="destinations_route"
+    )
     distance = models.IntegerField()
 
     def __str__(self):
@@ -74,7 +78,9 @@ class Order(models.Model):
 class Ticket(models.Model):
     row = models.IntegerField()
     seat = models.IntegerField()
-    flight = models.ForeignKey("Flight", on_delete=models.CASCADE, related_name="flights")
+    flight = models.ForeignKey(
+        "Flight", on_delete=models.CASCADE, related_name="flights"
+    )
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -83,7 +89,9 @@ class Ticket(models.Model):
 
 class Flight(models.Model):
     route = models.ForeignKey(Route, on_delete=models.CASCADE, related_name="routes")
-    airplane = models.ForeignKey(Airplane, on_delete=models.CASCADE, related_name="airplanes")
+    airplane = models.ForeignKey(
+        Airplane, on_delete=models.CASCADE, related_name="airplanes"
+    )
     departure_time = models.DateTimeField()
     arrival_time = models.DateTimeField()
     crew = models.ForeignKey(Crew, on_delete=models.CASCADE, related_name="crews")
