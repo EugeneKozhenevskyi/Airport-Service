@@ -12,7 +12,7 @@ from airport.models import (
     Route,
     Flight,
     Ticket,
-    Order
+    Order,
 )
 
 
@@ -38,7 +38,7 @@ class AirplaneSerializer(serializers.ModelSerializer):
             "seats_in_row",
             "airplane_type",
             "capacity",
-            "image"
+            "image",
         )
 
 
@@ -120,10 +120,7 @@ class TicketSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         data = super(TicketSerializer, self).validate(attrs=attrs)
         Ticket.validate_ticket(
-            attrs["row"],
-            attrs["seat"],
-            attrs["flight"].airplane,
-            ValidationError
+            attrs["row"], attrs["seat"], attrs["flight"].airplane, ValidationError
         )
         return data
 
@@ -159,15 +156,13 @@ class FlightListSerializer(FlightSerializer):
             "departure_time",
             "arrival_time",
             "crew",
-            "tickets_available"
+            "tickets_available",
         )
 
 
 class FlightDetailSerializer(FlightListSerializer):
     route = RouteListSerializer(many=False, read_only=True)
-    taken_places = TicketSeatsSerializer(
-        source="tickets", many=True, read_only=True
-    )
+    taken_places = TicketSeatsSerializer(source="tickets", many=True, read_only=True)
 
     class Meta:
         model = Flight
@@ -178,7 +173,7 @@ class FlightDetailSerializer(FlightListSerializer):
             "departure_time",
             "arrival_time",
             "crew",
-            "taken_places"
+            "taken_places",
         )
 
 

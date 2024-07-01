@@ -96,9 +96,7 @@ class Route(models.Model):
 
 
 class Flight(models.Model):
-    route = models.ForeignKey(
-        Route, on_delete=models.CASCADE, related_name="flights"
-    )
+    route = models.ForeignKey(Route, on_delete=models.CASCADE, related_name="flights")
     airplane = models.ForeignKey(
         Airplane, on_delete=models.CASCADE, related_name="flights"
     )
@@ -113,9 +111,7 @@ class Flight(models.Model):
 class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="orders"
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="orders"
     )
 
     def __str__(self):
@@ -128,12 +124,8 @@ class Order(models.Model):
 class Ticket(models.Model):
     row = models.IntegerField()
     seat = models.IntegerField()
-    flight = models.ForeignKey(
-        Flight, on_delete=models.CASCADE, related_name="tickets"
-    )
-    order = models.ForeignKey(
-        Order, on_delete=models.CASCADE, related_name="tickets"
-    )
+    flight = models.ForeignKey(Flight, on_delete=models.CASCADE, related_name="tickets")
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="tickets")
 
     @staticmethod
     def validate_ticket(row, seat, airplane, error_to_raise):
@@ -145,11 +137,10 @@ class Ticket(models.Model):
             if not (1 <= ticket_attr_value <= count_attrs):
                 raise error_to_raise(
                     {
-                        ticket_attr_name:
-                            f"{ticket_attr_name} "
-                            f"number must be in available range: "
-                            f"(1, {airplane_attr_name}): "
-                            f"(1, {count_attrs})"
+                        ticket_attr_name: f"{ticket_attr_name} "
+                        f"number must be in available range: "
+                        f"(1, {airplane_attr_name}): "
+                        f"(1, {count_attrs})"
                     }
                 )
 
@@ -162,11 +153,11 @@ class Ticket(models.Model):
         )
 
     def save(
-            self,
-            force_insert=False,
-            force_update=False,
-            using=None,
-            update_fields=None,
+        self,
+        force_insert=False,
+        force_update=False,
+        using=None,
+        update_fields=None,
     ):
         self.full_clean()
         return super(Ticket, self).save(
@@ -178,6 +169,4 @@ class Ticket(models.Model):
         ordering = ["row", "seat"]
 
     def __str__(self):
-        return (
-            f"{str(self.flight)} (row: {self.row}, seat: {self.seat})"
-        )
+        return f"{str(self.flight)} (row: {self.row}, seat: {self.seat})"

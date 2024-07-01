@@ -9,7 +9,7 @@ from airport.views import (
     AirportViewSet,
     RouteViewSet,
     FlightViewSet,
-    OrderViewSet
+    OrderViewSet,
 )
 
 
